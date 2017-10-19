@@ -9,6 +9,7 @@
 //#define front "front.png"
 #define SHAPE_SIZE 20
 #define ARENA_SIZE 20
+#define SDL_MESSAGEBOX_PROMPT 16
 
 #define SCREEN_WIDTH  640
 #define SCREEN_HEIGHT 480
@@ -266,7 +267,7 @@ int main(int argc, char ** argv)
     }
     //player colliding with box
     if ( DestR.x < 150 ) {// < 105
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_PROMPT,
                          "Target Reached",
                          "Congratulations! Loading next level.",
                          NULL);
@@ -276,7 +277,7 @@ int main(int argc, char ** argv)
       if(levelComplete == true){
         levelPoints = 100;
 
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_PROMPT,
                          "Points Earned!!",
                          "You have earned a total of 100 points.\nPlease check your score by looking at the cmd prompt.",
                          NULL);
