@@ -30,10 +30,29 @@ void onQuit();
     void onKeyUp( SDL_Event* event );
 int running;
 std::map<int,int> keys;
+int levelPoints = 100;
+bool levelComplete = false;
+bool Col(SDL_Rect * DestR, SDL_Rect * BoxDest){
+  if(DestR->y >= BoxDest->y + BoxDest->h) {
+    return 0;
+
+
+  }
+
+}
 
 float speed = 1.0;//1.0
 int main(int argc, char ** argv)
 {
+    //message box tesr
+   /*SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                         "Missing file",
+                         "File is missing. Please reinstall the program.",
+                         NULL);*/
+
+
+
+    //test
     SDL_Rect SrcR;
   SDL_Rect DestR;
 
@@ -54,7 +73,7 @@ int main(int argc, char ** argv)
   Boxrect.w = SHAPE_SIZE;
   Boxrect.h = SHAPE_SIZE;
 
-  BoxDest.x = 640 / 2 - SHAPE_SIZE / 2;//640
+  BoxDest.x = 650 / 2 - SHAPE_SIZE / 2;//640
   BoxDest.y = 400 / 2 - SHAPE_SIZE / 2;//580
   BoxDest.w = SHAPE_SIZE;
   BoxDest.h = SHAPE_SIZE;
@@ -212,7 +231,7 @@ int main(int argc, char ** argv)
 
     //test
     /* collide with edges of screen */
-    if ( DestR.x < 105 ) {// < 0
+    if ( DestR.x < 105   ) {// < 105
       DestR.x = 105;// = 0
 
     }
@@ -232,9 +251,11 @@ int main(int argc, char ** argv)
 //box test
 
    if ( BoxDest.x < 0 ) {//0
+
       BoxDest.x = 0;//0
     }
     else if ( BoxDest.x > SCREEN_WIDTH-130 ) {//DestR.x
+
       BoxDest.x = SCREEN_WIDTH-130;//DestR.y
     }
     if ( DestR.y < 0 ) {//0
@@ -244,10 +265,27 @@ int main(int argc, char ** argv)
       BoxDest.y = SCREEN_HEIGHT-152 ;//DestR.y
     }
     //player colliding with box
-    if ( DestR.x = BoxDest.x ) {// < 0
-      DestR.x = BoxDest.x;// = 0
+    if ( DestR.x < 150 ) {// < 105
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                         "Target Reached",
+                         "Congratulations! Loading next level.",
+                         NULL);
+            levelComplete = true;
 
-    }
+      //after ok is pressed it should automatically load the next segment of code
+      if(levelComplete == true){
+        levelPoints = 100;
+
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                         "Points Earned!!",
+                         "You have earned a total of 100 points.\nPlease check your score by looking at the cmd prompt.",
+                         NULL);
+          printf("Score:%d",levelPoints);
+      }
+
+
+
+    }//test
 
 
 
@@ -263,8 +301,9 @@ int main(int argc, char ** argv)
 
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, Arenatext,NULL, NULL );
-        SDL_RenderCopy(renderer, texture,&SrcR, &DestR );
+        //SDL_RenderCopy(renderer, texture,&SrcR, &DestR );
         SDL_RenderCopy(renderer, box,&Boxrect, &BoxDest );
+        SDL_RenderCopy(renderer, texture,&SrcR, &DestR );
         SDL_RenderCopy(renderer, box,&Arenarect, &Arenarect );
         SDL_RenderPresent(renderer);
 
