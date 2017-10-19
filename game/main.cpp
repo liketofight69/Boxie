@@ -2,6 +2,8 @@
 #include <SDL_image.h>
 #include <cstdio>
 #include <map>
+#include "SDL_thread.h"
+
 
 #define img "sprite.png"
 #define img2 "front.png"
@@ -29,7 +31,10 @@ public:
 void onQuit();
     void onKeyDown( SDL_Event* event );
     void onKeyUp( SDL_Event* event );
+
+
 int running;
+int success;
 std::map<int,int> keys;
 int levelPoints = 100;
 bool levelComplete = false;
@@ -45,15 +50,11 @@ bool Col(SDL_Rect * DestR, SDL_Rect * BoxDest){
 float speed = 1.0;//1.0
 int main(int argc, char ** argv)
 {
-    //message box tesr
-   /*SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                         "Missing file",
-                         "File is missing. Please reinstall the program.",
-                         NULL);*/
 
 
 
-    //test
+
+
     SDL_Rect SrcR;
   SDL_Rect DestR;
 
@@ -119,33 +120,10 @@ int main(int argc, char ** argv)
         front_face);*/
     SDL_Texture * box = SDL_CreateTextureFromSurface(renderer,
         boximg);
-    /*SrcR.x = 0;
-    SrcR.y = 0;
-    DestR.x = 0;
-    DestR.y = 0;
-    //image->h = 5;
-    //image->w = 5;
-    //test
-    //
 
-     if ( keys[SDLK_LEFT] ) {
-        DestR.x -= speed ;
-    } else if ( keys[SDLK_RIGHT] ) {
-        DestR.x += speed ;
-    } else if ( keys[SDLK_UP] ) {
-       DestR.y -= speed ;
-    } else if ( keys[SDLK_DOWN] ) {
-        DestR.y += speed ;
-    }
-  */
-
-
-
-    //test
 
     SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
     SDL_RenderClear(renderer);
-
 
 
 
@@ -267,26 +245,37 @@ int main(int argc, char ** argv)
     }
     //player colliding with box
     if ( DestR.x < 150 ) {// < 105
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_PROMPT,
+     success = SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_PROMPT,
                          "Target Reached",
-                         "Congratulations! Loading next level.",
-                         NULL);
+                         "Congratulations! Demo complete.",
+                         window);
             levelComplete = true;
 
       //after ok is pressed it should automatically load the next segment of code
       if(levelComplete == true){
         levelPoints = 100;
 
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_PROMPT,
+     success =  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_PROMPT,
                          "Points Earned!!",
                          "You have earned a total of 100 points.\nPlease check your score by looking at the cmd prompt.",
-                         NULL);
+                         window);
+
           printf("Score:%d",levelPoints);
+
+      if(success == 0){
+         break;
+
       }
 
 
 
-    }//test
+      }
+      //break;
+
+     //SDL_DestroyTexture(Arenatext);
+
+
+    }
 
 
 
